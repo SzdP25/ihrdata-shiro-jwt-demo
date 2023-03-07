@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 设置属性 -->
+    <property name="logging.level" value="INFO"/>
+    <property name="logging.path" value="C:/LOGS/IHRDATA-SHIRO-JWT-DEMO"/>
+    <property name="logging.charset" value="UTF-8"/>
+    <property name="logging.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+    <property name="logging.history" value="14"/>
+
+    <!-- 设置控制台输出 -->
+    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>${logging.charset}</charset>
+            <pattern>${logging.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 设置INFO级别的滚动文件输出 -->
+    <appender name="INFO_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${logging.path}/info.log</file>
+        <encoder>
+            <charset>${logging.charset}</charset>
+            <pattern>${logging.pattern}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logging.path}/info/info.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>${logging.history}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 设置ERROR级别的滚动文件输出 -->
+    <appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${logging.path}/error.log</file>
+        <encoder>
+            <charset>${logging.charset}</charset>
+            <pattern>${logging.pattern}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logging.path}/error/error.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>${logging.history}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.ihrdata.demo" level="${logging.level}" additivity="true">
+        <appender-ref ref="INFO_APPENDER"/>
+        <appender-ref ref="ERROR_APPENDER"/>
+    </logger>
+
+    <root level="${logging.level}">
+        <appender-ref ref="CONSOLE_APPENDER"/>
+    </root>
+</configuration>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ihrdata.demo.dao.RbacRoleCustomMapper">
+    <resultMap id="BaseResultMap" type="com.ihrdata.demo.model.RbacRole">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_status" jdbcType="TINYINT" property="roleStatus"/>
+        <result column="seq" jdbcType="TINYINT" property="seq"/>
+        <result column="create_user" jdbcType="BIGINT" property="createUser"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="update_user" jdbcType="BIGINT" property="updateUser"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_delete" jdbcType="TINYINT" property="isDelete"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, role_name, role_status, seq, create_user, gmt_create,
+        update_user, gmt_modified,
+        is_delete
+    </sql>
+
+    <select id="selectByUserId" parameterType="long" resultMap="BaseResultMap">
+        SELECT
+        t1.id,
+        t1.role_name,
+        t1.role_status,
+        t1.seq,
+        t1.create_user,
+        t1.gmt_create,
+        t1.update_user,
+        t1.gmt_modified,
+        t1.is_delete
+        FROM
+        rbac_role t1
+        INNER JOIN rbac_role_user t2 ON t1.id = t2.role_id
+        WHERE
+        t2.user_id = #{userId} ORDER BY t1.role_name ASC
+    </select>
+
+    <select id="selectAllRole" parameterType="com.ihrdata.demo.web.param.RbacRolePagingParam" resultMap="BaseResultMap">
+        SELECT
+        DISTINCT t1.id,
+        t1.role_name,
+        t1.role_status,
+        t1.seq,
+        t1.create_user,
+        t1.gmt_create,
+        t1.update_user,
+        t1.gmt_modified,
+        t1.is_delete
+        FROM
+        rbac_role t1
+        INNER JOIN rbac_role_resource t2 ON t1.id = t2.role_id
+        WHERE
+        t1.is_delete = 0
+        <if test="rbacRolePagingParam.roleName!=null and rbacRolePagingParam.roleName!=''">
+            AND
+            t1.role_name LIKE CONCAT('%',#{rbacRolePagingParam.roleName},'%')
+        </if>
+        <if test="rbacRolePagingParam.resourceId!=null and rbacRolePagingParam.resourceId.size()!=0">
+            AND
+            t2.resource_id in(
+            <foreach collection="rbacRolePagingParam.resourceId" item="resourceId" index="index" separator=",">
+                #{resourceId}
+            </foreach>
+            )
+        </if>
+        ORDER BY t1.gmt_create ASC
+    </select>
+</mapper>

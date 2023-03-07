@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ihrdata.demo.dao.RbacRoleMapper">
+    <resultMap id="BaseResultMap" type="com.ihrdata.demo.model.RbacRole">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_status" jdbcType="TINYINT" property="roleStatus"/>
+        <result column="seq" jdbcType="TINYINT" property="seq"/>
+        <result column="create_user" jdbcType="BIGINT" property="createUser"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="update_user" jdbcType="BIGINT" property="updateUser"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_delete" jdbcType="TINYINT" property="isDelete"/>
+    </resultMap>
+</mapper>

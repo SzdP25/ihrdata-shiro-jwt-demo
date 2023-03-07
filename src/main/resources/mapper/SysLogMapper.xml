@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ihrdata.demo.dao.SysLogMapper">
+    <resultMap id="BaseResultMap" type="com.ihrdata.demo.model.SysLog">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="user_operation" jdbcType="VARCHAR" property="userOperation"/>
+        <result column="operation_type" jdbcType="VARCHAR" property="operationType"/>
+        <result column="req_clazz" jdbcType="VARCHAR" property="reqClazz"/>
+        <result column="req_method" jdbcType="VARCHAR" property="reqMethod"/>
+        <result column="req_params_name" jdbcType="VARCHAR" property="reqParamsName"/>
+        <result column="req_params_value" jdbcType="VARCHAR" property="reqParamsValue"/>
+        <result column="req_ip" jdbcType="VARCHAR" property="reqIp"/>
+        <result column="cost_time" jdbcType="BIGINT" property="costTime"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,155 @@
+server:
+  # 配置启动端口号
+  port: 8085
+  default:
+    # 系统默认分页条数
+    page-size: 10
+    # 系统默认密码
+    password: 123456
+    # 系统默认登录有效天数
+    valid-day: 30
+    # AES密钥
+    aes-key: d7b85f6e214abcda
+    # 是否开启加解密，info模式开启，debug模式关闭
+    decode-encrypt-level: debug
+    #decode-encrypt-level: info
+# swagger-ui页面
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+#Logging
+logging:
+  config: classpath:logback-spring.xml
+#Datasource
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://1.1.1.1:3306
+    username: root
+    password: 123456
+#HikariCP
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      idle-timeout: 180000
+      max-lifetime: 1800000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      pool-name: HikariCP
+#Redis
+    redis:
+      database: 15
+      host: 1.1.1.1
+      lettuce:
+        pool:
+          max-active: 100
+          max-idle: 20
+          max-wait: -1ms
+          min-idle: 0
+      password: password
+      port: 26379
+      timeout: 30000
+        #Jackson
+    jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+8
+#Mybatis
+mybatis:
+  config-location: classpath:mybatis.xml
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.ihrdata.demo.model
+#TkMapper
+mapper:
+  before: false
+  identity: MYSQL
+  mappers: com.ihrdata.demo.mybatis.TkMapper
+  not-empty: true
+  use-java-type: true
+  wrap-keyword: '`{0}`'
+#PageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+# SHIRO
+shiro:
+  # rememberMe cookie有效时长，默认30天
+  cookie-timeout: 2592000
+  hash-algorithm-name: md5
+  hash-iterations: 1
+  redis:
+    # shiro redis缓存时长，默认1800秒
+    expire: 1800
+  salt: 20181119
+  # session 超时时间，默认1800000毫秒
+  session-timeout: 1800000
+#Jedis
+jedis:
+  maxIdle: 512
+  maxTotal: 1024
+  maxWaitMillis: 1000
+  minIdle: 10
+  testOnBorrow: true
+  testOnReturn: false
+#移动云MAS短信平台
+#测试环境地址
+mas_userAccount: tr2
+mas_password: ihr123
+mas_url: http://112.35.4.197:15000
+#天津天任大数据科技有限公司
+mas_addSerial: 123
+mas_ecname: \u5929\u6d25\u5929\u4efb\u5927\u6570\u636e\u79d1\u6280\u6709\u9650\u516c\u53f8
+mas_sign: mwbd3jyfC
+mas_smsPriority: 1
+#mas_sign=Ku9TXihkS
+mas_isMo: true
+mas_templateId: 5a7bc2aa529a4034845ed2a8c43d8f51
+#ValidationCode
+#验证码有效时间
+code_effective: 300
+#验证码重发间隔时间
+code_num: 50
+code_resend: 120
+code_time: 86400
+# 行为验证码配置start
+# 缓存local/redis
+aj:
+  captcha:
+    # aes加密坐标开启或者禁用(true|false)
+    aes-status: true
+    # local缓存的阈值,达到这个值，清除缓存
+    cache-number: 1000
+    cache-type: redis
+    #点选字体字体大小
+    font-size: 25
+    #点选字体样式 默认Font.BOLD
+    font-style: 1
+    #点选文字个数,存在问题，暂不支持修改
+    #click-word-count: 4
+    history-data-clear-enable: false
+    # 滑动干扰项(0/1/2)
+    interference-options: 2
+    req-check-minute-limit: 60
+    # 接口请求次数一分钟限制是否开启 true|false
+    req-frequency-limit-enable: false
+    # 验证失败5次，get接口锁定
+    req-get-lock-limit: 5
+    # 验证失败后，锁定时间间隔,s
+    req-get-lock-seconds: 360
+    # get接口一分钟内请求数限制
+    req-get-minute-limit: 30
+    # check接口一分钟内请求数限制
+    req-verify-minute-limit: 60
+    # 右下角水印字体(不配置时，默认使用文泉驿正黑)
+    # 校验滑动拼图允许误差偏移量(默认5像素)
+    slip-offset: 5
+    # local定时清除过期缓存(单位秒),设置为0代表不执行
+    timing-clear: 180
+    # 验证码类型default两种都实例化。
+    type: default
+    # 汉字统一使用Unicode,保证程序通过@value读取到是中文，可通过这个在线转换;yml格式不需要转换
+    # https://tool.chinaz.com/tools/unicode.aspx 中文转Unicode
+    # 右下角水印文字(我的水印)
+    water-mark: \u5929\u4efb\u5927\u6570\u636e
+

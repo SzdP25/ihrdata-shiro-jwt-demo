@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ihrdata.demo.dao.RbacResourceCustomMapper">
+    <resultMap id="BaseResultMap" type="com.ihrdata.demo.model.RbacResource">
+        <!-- WARNING - @mbg.generated -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="level" jdbcType="VARCHAR" property="level"/>
+        <result column="resource_name" jdbcType="VARCHAR" property="resourceName"/>
+        <result column="resource_type" jdbcType="TINYINT" property="resourceType"/>
+        <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl"/>
+        <result column="perms" jdbcType="VARCHAR" property="perms"/>
+        <result column="resource_status" jdbcType="TINYINT" property="resourceStatus"/>
+        <result column="seq" jdbcType="INTEGER" property="seq"/>
+        <result column="create_user" jdbcType="BIGINT" property="createUser"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="update_user" jdbcType="BIGINT" property="updateUser"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_delete" jdbcType="TINYINT" property="isDelete"/>
+    </resultMap>
+
+    <update id="batchUpdateLevel" parameterType="map">
+        <foreach collection="resourceList" item="resource" separator=";">
+            UPDATE rbac_resource SET level = #{resource.level} WHERE ID = #{resource.id}
+        </foreach>
+    </update>
+
+    <select id="selectByRoleId" parameterType="long" resultMap="BaseResultMap">
+        SELECT
+        t1.id,
+        t1.parent_id,
+        t1.LEVEL,
+        t1.resource_name,
+        t1.resource_type,
+        t1.resource_url,
+        t1.perms,
+        t1.resource_status,
+        t1.seq,
+        t1.create_user,
+        t1.gmt_create,
+        t1.update_user,
+        t1.gmt_modified,
+        t1.is_delete
+        FROM
+        rbac_resource t1
+        INNER JOIN rbac_role_resource t2 ON t1.id = t2.resource_id
+        WHERE
+        t2.role_id = #{roleId} AND t1.is_delete = 0 ORDER BY t1.resource_name ASC
+    </select>
+
+    <update id="updateSeqById" parameterType="map">
+        <foreach collection="map" index="key" item="value" open="" separator="" close="">
+            update rbac_resource set seq = #{value}
+            where id = #{key};
+        </foreach>
+    </update>
+</mapper>
